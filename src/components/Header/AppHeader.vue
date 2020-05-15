@@ -2,8 +2,7 @@
    <div>
         
         <v-app-bar
-            color="info"
-            dense
+            color="secondary"
             dark
             app
             clipped-left

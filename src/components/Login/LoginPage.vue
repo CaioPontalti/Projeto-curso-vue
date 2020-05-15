@@ -12,7 +12,7 @@
                 />
                 
                 <v-btn depressed 
-                    color="info"
+                    color="secondary"
                     dark
                     block
                     @click="login"
@@ -22,7 +22,7 @@
                 </v-btn>
 
                 <v-btn text
-                    color="blue"
+                    color="secondary"
                     @click="loginVisitante"> Entrar como visitante
                 </v-btn>
             </v-col>
