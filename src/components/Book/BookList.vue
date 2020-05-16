@@ -2,38 +2,28 @@
     <div>
         <v-row>
             <v-col cols="12"> 
-                <v-text-field v-model="textSearch"
-                                label="Search..."
-                                @input="goSearch"
-                >
-                </v-text-field>
+
+               <search-input-field @search="goSearch"/>
+
             </v-col>
         </v-row>
-        
+        <v-row>
+            <v-btn text
+                cols="12"
+                @click="goClean"
+                class="clean"
+            >
+                <span class="text-lowercase">Clean</span> 
+            </v-btn>
+        </v-row>
+
         <loading :condition="serchOnGoing">
             <v-row>
                 <v-col cols="12"
                     md="3"
                     v-for="(book, index) in bookList" :key="index"
             >
-                    <v-card class="mx-auto" shaped >
-                        <v-card-title>{{ book.volumeInfo.title }}</v-card-title>
-
-                        <v-card-subtitle v-if="book.volumeInfo.subtitle">{{ book.volumeInfo.subtitle }}</v-card-subtitle>
-                        <v-card-subtitle v-else>Livro sem sub-título</v-card-subtitle>
-                        
-                        <v-container>
-                            <span><strong>Páginas: </strong>{{ book.volumeInfo.pageCount }}</span>
-                        </v-container>
-
-                        <v-card-actions>
-                            <v-btn text 
-                                small
-                                color="secondary" >
-                            <span class="text-lowercase text-end" >ver detalhes</span> 
-                            </v-btn>
-                        </v-card-actions>
-                    </v-card>
+                    <book-item :objBook="book"/>
 
                 </v-col>
             </v-row>
@@ -44,34 +34,53 @@
 
 <script>
 
-    const axios = require('axios');
+import api from '../services/api';
 
-import Loading from '../Loading/Loading.vue'
+import Loading from '../Loading/Loading.vue';
+import BookItem from './BookItem.vue';
+import SearchInputField from '../Search/SearchInputField.vue';
 
 export default {
     name: 'BookList',
+    mixins:[api],
     components:{
-        Loading
+        Loading,
+        BookItem,
+        SearchInputField
     },
     data(){
         return{
             bookList:[],
             textSearch:'',
-            serchOnGoing: false
+            serchOnGoing: false,
+            textOld:''
         }
     },
     methods: {
-        goSearch(){
-            if (this.textSearch) {
-                this.serchOnGoing = true;
+        goSearch(textSearch){
+            if (textSearch) {
+                if (textSearch != this.textOld) {
 
-                axios.get(`https://www.googleapis.com/books/v1/volumes?q=${this.textSearch}`).then((response) =>{
-                this.bookList = response.data.items;
+                    this.textOld = textSearch;
+                    this.serchOnGoing = true;
+                    
+                    this.get(`/volumes?q=${textSearch}`).then((response) =>{
+                        this.bookList = response.data.items;
                 
-                this.serchOnGoing = false;
-                });
+                        this.serchOnGoing = false;
+                    });
+                }
             }
+        },
+        goClean(){
+            this.bookList = []
         }
     }
 }
 </script>
+
+<style scoped>
+    .clean{
+        margin-top: -30px;
+    }
+</style>
