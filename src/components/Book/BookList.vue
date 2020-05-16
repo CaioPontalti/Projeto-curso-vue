@@ -4,7 +4,7 @@
             <v-col cols="12"> 
                 <v-text-field v-model="textSearch"
                                 label="Search..."
-                                @change="goSearch"
+                                @input="goSearch"
                 >
                 </v-text-field>
             </v-col>
@@ -17,11 +17,14 @@
                     v-for="(book, index) in bookList" :key="index"
             >
                     <v-card class="mx-auto" shaped >
-
                         <v-card-title>{{ book.volumeInfo.title }}</v-card-title>
 
                         <v-card-subtitle v-if="book.volumeInfo.subtitle">{{ book.volumeInfo.subtitle }}</v-card-subtitle>
                         <v-card-subtitle v-else>Livro sem sub-título</v-card-subtitle>
+                        
+                        <v-container>
+                            <span><strong>Páginas: </strong>{{ book.volumeInfo.pageCount }}</span>
+                        </v-container>
 
                         <v-card-actions>
                             <v-btn text 

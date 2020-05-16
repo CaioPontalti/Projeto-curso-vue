@@ -34,7 +34,7 @@ export default {
     name: 'AppHeader',
     methods:{
         goToLivros(){
-            this.$router.push('/book');
+            this.$router.push('/book').catch(err => {});
         },
         goToCollection(){
             this.$router.push('/collection');
