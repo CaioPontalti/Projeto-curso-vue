@@ -1,39 +1,65 @@
 <template>
-    <v-container fluid>
-        <v-row justify="center">
-            <v-col cols="12"
-                md="4"
-                class="text-center"
-            >
-                <h6 class="display-1 text-uppercase">Login</h6>
-                
-                <v-text-field label="token"
-                        v-model="token"
-                />
-                
-                <v-btn depressed 
-                    color="secondary"
-                    dark
-                    block
-                    @click="login"
-                    class="mb-2"
-                >
-                    Login
-                </v-btn>
+    <v-container fluid class="fill-height">
+        <v-row
+          align="center"
+          justify="center"
+        >
+          <v-col
+            cols="12"
+            sm="8"
+            md="4"
+          >
+            <v-card class="elevation-12">
+              <v-toolbar
+                color="secondary"
+                dark
+                flat
+              >
+                <v-toolbar-title>Login</v-toolbar-title>
+                <v-spacer></v-spacer>
+                </v-toolbar>
+                <v-card-text>
+                    <v-form>
+                        <v-text-field label="token"
+                                v-model="token"
+                        />
 
-                <v-btn text
-                    color="secondary"
-                    @click="loginVisitante"> Entrar como visitante
-                </v-btn>
-            </v-col>
+                        <v-text-field
+                            id="password"
+                            label="Password"
+                            name="password"
+                            type="password">
+                        </v-text-field>
+                    </v-form>
+              </v-card-text>
+              <v-card-actions>
+                    <v-btn 
+                        color="secondary"
+                        depressed
+                        block
+                        @click="login"
+                    >
+                        Login
+                    </v-btn>
+              </v-card-actions>
+              <v-card-actions>
+                    <v-btn text
+                        color="secondary"
+                        depressed
+                        block
+                        @click="loginVisitante"
+                    >
+                        Entrar como visitante
+                    </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-col>
         </v-row>
 
     </v-container>
 </template>
 
 <script>
-
-//AIzaSyCXCf1urKNqxNQ6MZpk9qm_dIekH1TXhWE
 
 export default {
     components:{
@@ -49,7 +75,6 @@ export default {
         login(){
             if(this.token){
                 this.$store.commit('setAuthToken', this.token);
-                this.$store.commit('setLogged', true);
                 this.$router.push('/book');
             }  
             else{
@@ -58,6 +83,7 @@ export default {
         },
         loginVisitante(){
             this.$store.commit('setLogged', true);
+            this.$store.commit('setAuthToken', 'AIzaSyCXCf1urKNqxNQ6MZpk9qm_dIekH1TXhWE');
             this.$router.push('/book');
         }
     }

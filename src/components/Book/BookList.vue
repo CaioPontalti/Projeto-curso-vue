@@ -7,13 +7,13 @@
 
             </v-col>
         </v-row>
-        <v-row>
+        <v-row v-if="bookList.length">
             <v-btn text
                 cols="12"
                 @click="goClean"
                 class="clean"
             >
-                <span class="text-lowercase">Clean</span> 
+                <span class="text-lowercase">Limpar busca</span> 
             </v-btn>
         </v-row>
 
@@ -59,7 +59,7 @@ export default {
     methods: {
         goSearch(textSearch){
             if (textSearch) {
-                if (textSearch != this.textOld) {
+                if (textSearch != this.textOld || !this.bookList.length) {
 
                     this.textOld = textSearch;
                     this.serchOnGoing = true;

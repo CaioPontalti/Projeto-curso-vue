@@ -8,7 +8,7 @@
             clipped-left
         >
             <v-app-bar-nav-icon @click="drawer = !drawer" v-if="$store.state.logged"/>
-            <v-toolbar-title >Google books</v-toolbar-title>
+            <v-toolbar-title>Google books</v-toolbar-title>
 
             <v-spacer></v-spacer>
 
@@ -34,14 +34,13 @@ export default {
     name: 'AppHeader',
     methods:{
         goToLivros(){
-            this.$router.push('/book').catch(err => {});
+            this.$router.push('/book').catch(() => {})
         },
         goToCollection(){
-            this.$router.push('/collection');
+            this.$router.push('/library').catch(() => {});
         },
         logoff(){
             this.$store.commit('setAuthToken', '');
-            this.$store.commit('setLogged', false);
             this.$router.push('/');
         },
     }

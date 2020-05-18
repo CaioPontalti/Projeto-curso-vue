@@ -42,8 +42,8 @@
                     </v-chip>
                 </div>
 
-                <div>
-                    <v-subheader v-if="book.volumeInfo.categories && book.volumeInfo.categories.length">Categories</v-subheader>
+                <div v-if="book.volumeInfo.categories && book.volumeInfo.categories.length">
+                    <v-subheader>Categories</v-subheader>
                     <v-divider/>
                     <v-chip  v-for="(category, index) in book.volumeInfo.categories" :key="index"
                         class="mt-2 mr-1">
